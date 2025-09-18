@@ -1,0 +1,28 @@
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+
+# Data and models
+data/
+models/
+reports/*.csv
+reports/*.png
+reports/*.pdf
+
+# Notebooks
+notebooks/*.ipynb_checkpoints/
+
+# IDE and OS
+.vscode/
+.idea/
+*.DS_Store

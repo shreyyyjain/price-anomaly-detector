@@ -1,0 +1,51 @@
+{
+    "initial_shape": "37813",
+    "final_shape": "(37813, 66)",
+    "dropped_columns": [
+        "ground clearance unladen",
+        "stroke"
+    ],
+    "imputed_columns": [
+        "km",
+        "car_age",
+        "max power delivered",
+        "alloy wheel size",
+        "wheel base",
+        "no of cylinder",
+        "length",
+        "width",
+        "height",
+        "top speed",
+        "acceleration",
+        "kerb weight",
+        "gross weight",
+        "front tread",
+        "rear tread",
+        "turning radius",
+        "cargo volume",
+        "max torque delivered",
+        "max power at",
+        "max torque at",
+        "bore"
+    ],
+    "categorical_standardized": [
+        "fuel",
+        "transmission",
+        "city",
+        "oem",
+        "model",
+        "variant",
+        "color",
+        "engine type",
+        "owner_type",
+        "drive type",
+        "steering type",
+        "front brake type",
+        "rear brake type",
+        "tyre type"
+    ],
+    "new_features": [
+        "km_per_year"
+    ],
+    "checksum": "bd5408aef5e09bf9d11b926e5b6fb131"
+}
