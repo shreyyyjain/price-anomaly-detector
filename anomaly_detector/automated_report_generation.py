@@ -11,6 +11,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
+from matplotlib.ticker import MaxNLocator
 
 # Project paths (relative for deployment)
 DATA_PATH = 'data/cleaned_engineered.csv'
@@ -98,6 +99,8 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     ax.set_title('Predicted vs. Actual Prices')
     ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
+    ax.xaxis.set_major_locator(MaxNLocator(nbins=5))  # Reduce tick density
+    plt.setp(ax.get_xticklabels(), rotation=45, ha='right')  # Rotate x-axis labels
     ax.legend()
     plt.tight_layout()
     img_path = os.path.join(REPORTS_PATH, 'scatter_plot.png')
@@ -116,7 +119,7 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     fig.savefig(img_path, dpi=300, bbox_inches='tight')
     plt.close()
     elements.append(Paragraph("SHAP Summary Plot", styles['Heading2']))
-    elements.append(Image(img_path, width=350, height=250))
+    elements.append(Image(img_path, width=350, height=450))
     elements.append(Spacer(1, 12))
 
     # Build PDF

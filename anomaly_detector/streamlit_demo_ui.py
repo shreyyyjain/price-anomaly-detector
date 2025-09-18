@@ -8,6 +8,7 @@ import matplotlib.ticker as ticker
 from sklearn.preprocessing import StandardScaler
 import base64
 from io import BytesIO
+from matplotlib.ticker import MaxNLocator
 from automated_report_generation import generate_report
 
 # Project paths (relative for deployment)
@@ -134,27 +135,38 @@ def main():
             if isinstance(violations, str):
                 rules = violations.split(', ')
                 all_rules.extend([rule.strip() for rule in rules if rule.strip()])
-        rule_options = ['All'] + sorted(list(set(all_rules)))
-        selected_rule = st.selectbox("Filter by Rule Violation", rule_options)
+        rule_options = sorted(list(set(all_rules)))
+        selected_rules = st.multiselect("Filter by Rule Violation", rule_options, default=rule_options)
         
-        oem_options = ['All'] + sorted(anomaly_df['oem'].unique().tolist())
-        selected_oem = st.selectbox("Filter by OEM", oem_options)
+        # Filter by rules first
+        filtered_anomalies = anomaly_df
+        if selected_rules:
+            filtered_anomalies = filtered_anomalies[
+                filtered_anomalies['rule_violations'].apply(
+                    lambda x: any(rule in x for rule in selected_rules)
+                )
+            ]
         
-        model_options = ['All'] + sorted(anomaly_df['model'].unique().tolist())
-        selected_model = st.selectbox("Filter by Model", model_options)
+        # Update OEM options based on filtered anomalies
+        oem_options = ['All'] + sorted(filtered_anomalies['oem'].unique().tolist())
+        selected_oems = st.multiselect("Filter by OEM", oem_options, default=['All'])
+        
+        # Apply OEM filter
+        if selected_oems and 'All' not in selected_oems:
+            filtered_anomalies = filtered_anomalies[filtered_anomalies['oem'].isin(selected_oems)]
+        
+        # Update Model options based on filtered OEMs
+        model_options = ['All'] + sorted(filtered_anomalies['model'].unique().tolist())
+        selected_models = st.multiselect("Filter by Model", model_options, default=['All'])
+        
+        # Apply Model filter
+        if selected_models and 'All' not in selected_models:
+            filtered_anomalies = filtered_anomalies[filtered_anomalies['model'].isin(selected_models)]
         
         sort_by = st.selectbox("Sort By", ['residual', 'listed_price', 'km', 'car_age'])
         ascending = st.checkbox("Sort Ascending", value=False)
 
-        # Apply filters
-        filtered_anomalies = anomaly_df
-        if selected_rule != 'All':
-            filtered_anomalies = filtered_anomalies[filtered_anomalies['rule_violations'].str.contains(selected_rule, case=False)]
-        if selected_oem != 'All':
-            filtered_anomalies = filtered_anomalies[filtered_anomalies['oem'] == selected_oem]
-        if selected_model != 'All':
-            filtered_anomalies = filtered_anomalies[filtered_anomalies['model'] == selected_model]
-        
+        # Sort filtered anomalies
         filtered_anomalies = filtered_anomalies.sort_values(by=sort_by, ascending=ascending).reset_index(drop=True)
         for col in numeric_cols:
             if col in filtered_anomalies.columns:
@@ -184,7 +196,7 @@ def main():
     with col2:
         st.subheader("Visualizations")
         
-        # Scatter Plot with formatted axes
+        # Scatter Plot with formatted axes and rotated labels
         st.write("**Predicted vs. Actual Prices**")
         fig, ax = plt.subplots(figsize=(8, 6))
         ax.scatter(filtered_anomalies['listed_price'], filtered_anomalies['predicted_price'], c='red', alpha=0.5, label='Anomaly')
@@ -195,7 +207,10 @@ def main():
         ax.set_title('Predicted vs. Actual Prices (Filtered Anomalies)')
         ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
         ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
+        ax.xaxis.set_major_locator(MaxNLocator(nbins=5))  # Reduce tick density
+        plt.setp(ax.get_xticklabels(), rotation=45, ha='right')  # Rotate x-axis labels
         ax.legend()
+        plt.tight_layout()
         st.pyplot(fig)
         plt.close()
 
@@ -255,7 +270,7 @@ def main():
         else:
             st.warning(f"Index {selected_index} not found in dataset.")
     else:
-        st.warning("No anomalies available for the selected rule.")
+        st.warning("No anomalies available for the selected filters.")
 
     # Debug information
     with st.expander("Debug Information"):
