@@ -1,1 +1,6 @@
 data/*.csv filter=lfs diff=lfs merge=lfs -text
+git rm --cached data/cars_details_merges.csv
+echo "data/cars_details_merges.csv" >> .gitignore
+git add .gitignore
+git commit -m "Exclude non-essential large file"
+git push origin main
