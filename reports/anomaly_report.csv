@@ -1,0 +1,104 @@
+model,oem,listed_price,predicted_price,residual,km,car_age,rule_violations
+toyota land cruiser,toyota,"₹4,872,000","₹2,356,049","₹2,515,951","162,000",12,high_price_high_km
+mercedes-benz s-class,mercedes-benz,"₹4,872,000","₹3,024,067","₹1,847,933","60,000",18,high_price_old_car
+hummer h3,hummer,"₹4,000,000","₹2,259,727","₹1,740,273","51,066",18,high_price_old_car
+maruti wagon r,maruti,"₹1,600,000","₹258,335","₹1,341,665","84,994",16,high_price_old_car
+mahindra bolero,mahindra,"₹1,500,000","₹193,036","₹1,306,964","191,783",19,"high_price_old_car, high_price_high_km"
+bmw 6 series,bmw,"₹1,495,000","₹2,463,093","₹968,093","38,000",17,high_price_old_car
+mercedes-benz gle,mercedes-benz,"₹3,800,000","₹2,834,956","₹965,044","112,297",10,high_price_high_km
+toyota fortuner,toyota,"₹2,475,000","₹1,536,136","₹938,864","180,000",11,high_price_high_km
+land rover range rover sport,land rover,"₹3,700,000","₹2,877,535","₹822,465","128,000",14,high_price_high_km
+volvo xc60,volvo,"₹2,400,000","₹1,622,207","₹777,793","120,000",10,high_price_high_km
+bmw x5,bmw,"₹2,690,000","₹2,001,555","₹688,445","130,000",11,high_price_high_km
+skoda octavia,skoda,"₹1,800,000","₹1,116,151","₹683,849","102,844",9,high_price_high_km
+tata hexa,tata,"₹1,350,000","₹703,553","₹646,447","80,000",17,high_price_old_car
+hyundai santa fe,hyundai,"₹1,400,000","₹760,754","₹639,246","141,494",13,high_price_high_km
+mercedes-benz gle,mercedes-benz,"₹4,872,000","₹4,248,454","₹623,546","119,980",7,high_price_high_km
+bmw 7 series,bmw,"₹3,200,000","₹2,585,491","₹614,509","133,273",11,high_price_high_km
+mercedes-benz e-class,mercedes-benz,"₹4,098,043","₹3,514,680","₹583,363","115,372",7,high_price_high_km
+porsche cayenne,porsche,"₹3,275,000","₹2,716,313","₹558,687","101,995",12,high_price_high_km
+mercedes-benz c-class,mercedes-benz,"₹2,600,000","₹2,047,766","₹552,234","119,842",9,high_price_high_km
+audi a4,audi,"₹1,500,000","₹970,471","₹529,529","120,000",13,high_price_high_km
+mercedes-benz e-class,mercedes-benz,"₹2,150,000","₹1,630,393","₹519,607","101,000",12,high_price_high_km
+toyota fortuner,toyota,"₹3,750,000","₹3,243,125","₹506,875","134,000",6,high_price_high_km
+mahindra xuv500,mahindra,"₹1,600,000","₹1,097,651","₹502,349","102,605",8,high_price_high_km
+toyota fortuner,toyota,"₹2,850,000","₹2,356,481","₹493,519","191,783",8,high_price_high_km
+bmw 5 series,bmw,"₹1,290,000","₹1,763,615","₹473,615","102,000",11,high_price_high_km
+bmw x5,bmw,"₹4,000,000","₹3,527,638","₹472,362","112,411",8,high_price_high_km
+toyota fortuner,toyota,"₹3,000,000","₹2,540,963","₹459,037","120,000",2,high_price_high_km
+volvo xc 90,volvo,"₹1,500,000","₹1,956,061","₹456,061","191,783",9,high_price_high_km
+mercedes-benz glc,mercedes-benz,"₹3,300,000","₹2,845,430","₹454,570","120,036",9,high_price_high_km
+mercedes-benz c-class,mercedes-benz,"₹1,795,000","₹1,360,251","₹434,749","102,000",11,high_price_high_km
+skoda kodiaq,skoda,"₹2,900,000","₹2,469,505","₹430,495","125,000",8,high_price_high_km
+mercedes-benz gle,mercedes-benz,"₹2,288,244","₹2,716,613","₹428,369","111,659",10,high_price_high_km
+audi q3,audi,"₹2,200,000","₹1,774,363","₹425,637","110,000",9,high_price_high_km
+bmw x1,bmw,"₹1,200,000","₹777,708","₹422,292","128,428",12,high_price_high_km
+audi a4,audi,"₹1,850,000","₹1,432,134","₹417,866","110,000",11,high_price_high_km
+toyota fortuner,toyota,"₹2,900,000","₹2,482,512","₹417,488","120,000",7,high_price_high_km
+audi q3,audi,"₹1,450,000","₹1,050,459","₹399,541","131,000",11,high_price_high_km
+jeep compass,jeep,"₹1,800,000","₹1,404,364","₹395,636","120,102",8,high_price_high_km
+bentley continental,bentley,"₹4,872,000","₹4,478,665","₹393,335","95,000",16,high_price_old_car
+land rover discovery sport,land rover,"₹2,300,000","₹2,692,754","₹392,754","110,000",9,high_price_high_km
+audi q5,audi,"₹2,500,000","₹2,108,393","₹391,607","106,000",10,high_price_high_km
+mahindra ssangyong rexton,mahindra ssangyong,"₹1,100,000","₹710,396","₹389,604","105,858",11,high_price_high_km
+mercedes-benz e-class,mercedes-benz,"₹1,150,000","₹765,865","₹384,135","120,000",15,high_price_high_km
+bmw x1,bmw,"₹2,600,000","₹2,216,534","₹383,466","105,023",8,high_price_high_km
+jeep compass,jeep,"₹1,500,000","₹1,122,536","₹377,464","127,520",8,high_price_high_km
+mercedes-benz s-class,mercedes-benz,"₹1,645,127","₹1,270,533","₹374,594","116,451",15,high_price_high_km
+audi q7,audi,"₹3,650,000","₹3,279,198","₹370,802","150,000",9,high_price_high_km
+volvo xc90,volvo,"₹2,000,000","₹1,629,492","₹370,508","120,712",13,high_price_high_km
+audi q5,audi,"₹1,075,000","₹1,441,878","₹366,878","120,000",11,high_price_high_km
+mercedes-benz m-class,mercedes-benz,"₹2,000,000","₹2,364,016","₹364,016","118,523",10,high_price_high_km
+porsche cayenne,porsche,"₹2,088,000","₹2,450,566","₹362,566","114,000",12,high_price_high_km
+toyota fortuner,toyota,"₹1,400,000","₹1,757,643","₹357,643","180,000",10,high_price_high_km
+bmw x5,bmw,"₹3,500,000","₹3,147,141","₹352,859","158,683",10,high_price_high_km
+toyota innova,toyota,"₹1,100,000","₹750,182","₹349,818","150,000",11,high_price_high_km
+isuzu d-max,isuzu,"₹1,550,000","₹1,201,369","₹348,631","127,000",8,high_price_high_km
+toyota fortuner,toyota,"₹2,200,000","₹1,854,225","₹345,775","143,000",9,high_price_high_km
+mg hector,mg,"₹1,637,992","₹1,294,927","₹343,065","106,213",6,high_price_high_km
+audi q7,audi,"₹2,300,000","₹1,958,766","₹341,234","135,000",12,high_price_high_km
+toyota fortuner,toyota,"₹3,200,000","₹2,859,474","₹340,526","108,000",7,high_price_high_km
+toyota fortuner,toyota,"₹1,380,000","₹1,041,697","₹338,303","191,783",14,high_price_high_km
+bmw x5,bmw,"₹1,050,000","₹1,388,181","₹338,181","139,960",12,high_price_high_km
+bmw 3 series,bmw,"₹1,700,000","₹1,362,905","₹337,095","108,000",11,high_price_high_km
+mercedes-benz gls,mercedes-benz,"₹4,872,000","₹4,541,109","₹330,891","191,783",7,high_price_high_km
+jaguar xj,jaguar,"₹2,974,197","₹2,643,939","₹330,258","103,263",13,high_price_high_km
+land rover range rover evoque,land rover,"₹2,540,769","₹2,868,048","₹327,279","113,952",8,high_price_high_km
+mercedes-benz c-class,mercedes-benz,"₹2,200,000","₹1,874,333","₹325,667","105,000",10,high_price_high_km
+audi q3,audi,"₹1,800,000","₹1,476,758","₹323,242","110,000",11,high_price_high_km
+bmw 5 series,bmw,"₹1,450,000","₹1,771,881","₹321,881","100,011",12,high_price_high_km
+mercedes-benz s-class,mercedes-benz,"₹1,360,621","₹1,680,788","₹320,167","103,303",13,high_price_high_km
+bmw 3 series gt,bmw,"₹2,200,000","₹2,516,155","₹316,155","112,781",8,high_price_high_km
+toyota fortuner,toyota,"₹1,400,000","₹1,715,537","₹315,537","120,000",10,high_price_high_km
+audi a3,audi,"₹1,500,000","₹1,186,577","₹313,423","101,657",11,high_price_high_km
+isuzu d-max,isuzu,"₹1,550,000","₹1,238,805","₹311,195","105,000",9,high_price_high_km
+honda city,honda,"₹1,417,000","₹1,105,942","₹311,058","191,783",5,high_price_high_km
+mahindra xuv500,mahindra,"₹1,800,000","₹1,490,448","₹309,552","104,049",6,high_price_high_km
+toyota fortuner,toyota,"₹2,675,000","₹2,983,457","₹308,457","153,000",7,high_price_high_km
+mercedes-benz e-class,mercedes-benz,"₹1,495,707","₹1,189,050","₹306,657","102,615",13,high_price_high_km
+ford endeavour,ford,"₹1,400,000","₹1,701,645","₹301,645","141,000",9,high_price_high_km
+mitsubishi pajero,mitsubishi,"₹1,300,000","₹1,002,157","₹297,843","115,332",12,high_price_high_km
+toyota fortuner,toyota,"₹1,750,000","₹1,453,469","₹296,531","152,693",11,high_price_high_km
+volvo xc60,volvo,"₹1,595,000","₹1,300,343","₹294,657","165,446",12,high_price_high_km
+bmw x1,bmw,"₹1,090,000","₹796,600","₹293,400","135,000",14,high_price_high_km
+audi q7,audi,"₹3,475,000","₹3,184,610","₹290,390","110,000",9,high_price_high_km
+bmw 7 series,bmw,"₹1,150,000","₹1,436,517","₹286,517","120,000",14,high_price_high_km
+audi a4,audi,"₹2,000,000","₹1,714,943","₹285,057","122,566",10,high_price_high_km
+bmw x5,bmw,"₹2,400,000","₹2,682,954","₹282,954","156,032",9,high_price_high_km
+land rover discovery sport,land rover,"₹2,580,000","₹2,862,844","₹282,844","109,000",10,high_price_high_km
+bmw 5 series,bmw,"₹1,650,000","₹1,369,719","₹280,281","158,156",14,high_price_high_km
+land rover discovery sport,land rover,"₹3,100,000","₹2,820,909","₹279,091","150,000",8,high_price_high_km
+mercedes-benz cla,mercedes-benz,"₹1,450,000","₹1,728,968","₹278,968","144,496",9,high_price_high_km
+toyota innova crysta,toyota,"₹1,400,000","₹1,678,798","₹278,798","148,954",8,high_price_high_km
+bmw 3 series,bmw,"₹1,800,000","₹1,522,183","₹277,817","130,000",12,high_price_high_km
+toyota fortuner,toyota,"₹3,375,000","₹3,098,455","₹276,545","101,800",7,high_price_high_km
+tata hexa,tata,"₹1,300,000","₹1,030,763","₹269,237","102,142",8,high_price_high_km
+toyota fortuner,toyota,"₹1,500,000","₹1,230,903","₹269,097","112,538",12,high_price_high_km
+toyota fortuner,toyota,"₹2,275,979","₹2,542,481","₹266,502","115,050",8,high_price_high_km
+audi a4,audi,"₹1,300,000","₹1,035,270","₹264,730","122,000",12,high_price_high_km
+ford endeavour,ford,"₹3,250,000","₹2,985,535","₹264,465","141,000",5,high_price_high_km
+audi q5,audi,"₹1,800,000","₹1,535,850","₹264,150","115,000",11,high_price_high_km
+toyota fortuner,toyota,"₹2,300,000","₹2,562,759","₹262,759","191,783",8,high_price_high_km
+land rover range rover,land rover,"₹2,700,000","₹2,437,366","₹262,634","120,000",13,high_price_high_km
+mercedes-benz m-class,mercedes-benz,"₹2,190,000","₹1,929,916","₹260,084","191,783",11,high_price_high_km
+jaguar xf,jaguar,"₹1,500,000","₹1,758,995","₹258,995","115,576",11,high_price_high_km

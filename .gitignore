@@ -13,11 +13,12 @@ dist/
 build/
 
 # Data and models
-data/
-models/
-reports/*.csv
-reports/*.png
-reports/*.pdf
+# data/
+data/cars_details_merges.csv
+# models/
+# reports/*.csv
+# reports/*.png
+# reports/*.pdf
 
 # Notebooks
 notebooks/*.ipynb_checkpoints/

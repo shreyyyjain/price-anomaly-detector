@@ -1,0 +1,5 @@
+Metric,Value
+Total Anomalies,103
+Rule_high_price_high_km,96
+Rule_high_price_old_car,6
+"Rule_high_price_old_car, high_price_high_km",1
