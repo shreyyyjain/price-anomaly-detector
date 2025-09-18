@@ -1,29 +1,21 @@
-
-# Python
+# .gitignore
+# Data and models (included for deployment)
+# data/
+# models/
+reports/*.csv
+reports/*.png
+reports/*.pdf
+notebooks/*.ipynb_checkpoints/
+.venv/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
 env/
-venv/
-.venv/
 *.egg-info/
 dist/
 build/
-
-# Data and models
-# data/
-data/cars_details_merges.csv
-# models/
-# reports/*.csv
-# reports/*.png
-# reports/*.pdf
-
-# Notebooks
-notebooks/*.ipynb_checkpoints/
-
-# IDE and OS
 .vscode/
 .idea/
 *.DS_Store
