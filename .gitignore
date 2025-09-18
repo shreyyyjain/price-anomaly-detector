@@ -19,3 +19,16 @@ build/
 .vscode/
 .idea/
 *.DS_Store
+# .gitignore
+.ipynb_checkpoints/
+catboost_info/
+__pycache__/
+*.pyc
+.venv/
+env/
+*.egg-info/
+dist/
+build/
+.vscode/
+.idea/
+*.DS_Store
