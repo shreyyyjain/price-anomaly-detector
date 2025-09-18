@@ -81,3 +81,12 @@
 - Results saved to reports/evaluation_results.csv.
 - Precision-recall comparison plot saved to reports/precision_recall_comparison.png.
 - Next steps: Package the project and prepare documentation.
+
+# Evaluation Summary
+- Evaluated anomaly detection on a holdout set with 378 synthetic anomalies.
+- Metrics:
+  - LightGBM: Precision=0.6448, Recall=0.3122, F1=0.4207
+  - RandomForest: Precision=0.6321, Recall=0.3228, F1=0.4273
+- Results saved to reports/evaluation_results.csv.
+- Precision-recall comparison plot saved to reports/precision_recall_comparison.png.
+- Next steps: Package the project and prepare documentation.

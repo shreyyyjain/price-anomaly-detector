@@ -168,6 +168,6 @@ readme_content = f"""
 - Precision-recall comparison plot saved to reports/precision_recall_comparison.png.
 - Next steps: Package the project and prepare documentation.
 """
-with open(os.path.join(PROJECT_ROOT, 'README.md'), 'a', encoding='utf-8') as f:
+with open(('README.md'), 'a', encoding='utf-8') as f:
     f.write(readme_content)
 print('README.md updated with evaluation summary.')
