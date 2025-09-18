@@ -3,22 +3,20 @@ import pandas as pd
 import numpy as np
 import pickle
 import shap
-import os
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from sklearn.preprocessing import StandardScaler
 import base64
 from io import BytesIO
-from automated_report_generation import generate_report  # Correct import
+from automated_report_generation import generate_report
 
-# Project paths
+# Project paths (relative for deployment)
 DATA_PATH = 'data/cleaned_engineered.csv'
 ANOMALIES_PATH = 'reports/validated_anomalies.csv'
 MODEL_PATH = 'models/baseline_model.pkl'
 SCALER_PATH = 'models/scaler.pkl'
 FEATURE_PATH = 'models/feature_names.pkl'
 REPORTS_PATH = 'reports'
-
-os.makedirs(REPORTS_PATH, exist_ok=True)
 
 def main():
     st.set_page_config(page_title="Price Anomaly Detector", layout="wide")
@@ -130,22 +128,32 @@ def main():
     with col1:
         st.subheader("Anomaly Explorer")
         
-        # Extract all unique rules from rule_violations
+        # Filters
         all_rules = []
         for violations in anomaly_df['rule_violations']:
             if isinstance(violations, str):
                 rules = violations.split(', ')
                 all_rules.extend([rule.strip() for rule in rules if rule.strip()])
-        
         rule_options = ['All'] + sorted(list(set(all_rules)))
         selected_rule = st.selectbox("Filter by Rule Violation", rule_options)
+        
+        oem_options = ['All'] + sorted(anomaly_df['oem'].unique().tolist())
+        selected_oem = st.selectbox("Filter by OEM", oem_options)
+        
+        model_options = ['All'] + sorted(anomaly_df['model'].unique().tolist())
+        selected_model = st.selectbox("Filter by Model", model_options)
+        
         sort_by = st.selectbox("Sort By", ['residual', 'listed_price', 'km', 'car_age'])
         ascending = st.checkbox("Sort Ascending", value=False)
 
-        if selected_rule == 'All':
-            filtered_anomalies = anomaly_df
-        else:
-            filtered_anomalies = anomaly_df[anomaly_df['rule_violations'].str.contains(selected_rule, case=False)]
+        # Apply filters
+        filtered_anomalies = anomaly_df
+        if selected_rule != 'All':
+            filtered_anomalies = filtered_anomalies[filtered_anomalies['rule_violations'].str.contains(selected_rule, case=False)]
+        if selected_oem != 'All':
+            filtered_anomalies = filtered_anomalies[filtered_anomalies['oem'] == selected_oem]
+        if selected_model != 'All':
+            filtered_anomalies = filtered_anomalies[filtered_anomalies['model'] == selected_model]
         
         filtered_anomalies = filtered_anomalies.sort_values(by=sort_by, ascending=ascending).reset_index(drop=True)
         for col in numeric_cols:
@@ -159,7 +167,7 @@ def main():
         display_cols = ['model', 'oem', 'listed_price', 'predicted_price', 'residual', 'km', 'car_age', 'rule_violations']
         display_df = filtered_anomalies[display_cols].copy()
         for col in ['listed_price', 'predicted_price', 'residual']:
-            display_df[col] = display_df[col].apply(lambda x: f'₹{x:,.0f}' if pd.notnull(x) else '₹0')
+            display_df[col] = display_df[col].apply(lambda x: f'Rs. {x:,.0f}' if pd.notnull(x) else 'Rs. 0')
         for col in ['km', 'car_age']:
             display_df[col] = display_df[col].apply(lambda x: f'{x:,.0f}' if pd.notnull(x) else '0')
         st.dataframe(display_df, height=400)
@@ -174,24 +182,37 @@ def main():
             st.write(f"CSV Report saved at: {csv_path}")
 
     with col2:
+        st.subheader("Visualizations")
+        
+        # Scatter Plot with formatted axes
         st.write("**Predicted vs. Actual Prices**")
         fig, ax = plt.subplots(figsize=(8, 6))
-        plt.scatter(anomaly_df['listed_price'], anomaly_df['predicted_price'], c='red', alpha=0.5, label='Anomaly')
-        plt.plot([anomaly_df['listed_price'].min(), anomaly_df['listed_price'].max()], 
-                 [anomaly_df['listed_price'].min(), anomaly_df['listed_price'].max()], 'k--')
-        plt.xlabel('Actual Price (₹)')
-        plt.ylabel('Predicted Price (₹)')
-        plt.title('Predicted vs. Actual Prices (Anomalies)')
-        plt.xscale('log')
-        plt.yscale('log')
-        plt.legend()
+        ax.scatter(filtered_anomalies['listed_price'], filtered_anomalies['predicted_price'], c='red', alpha=0.5, label='Anomaly')
+        ax.plot([filtered_anomalies['listed_price'].min(), filtered_anomalies['listed_price'].max()], 
+                [filtered_anomalies['listed_price'].min(), filtered_anomalies['listed_price'].max()], 'k--')
+        ax.set_xlabel('Actual Price (Rs.)')
+        ax.set_ylabel('Predicted Price (Rs.)')
+        ax.set_title('Predicted vs. Actual Prices (Filtered Anomalies)')
+        ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
+        ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
+        ax.legend()
         st.pyplot(fig)
         plt.close()
 
+        # SHAP Summary Plot
         st.write("**SHAP Summary Plot**")
         fig, ax = plt.subplots(figsize=(8, 6))
         shap.summary_plot(shap_values, X_anomalies, show=False)
         plt.title('SHAP Summary for Anomalies')
+        st.pyplot(fig)
+        plt.close()
+
+        # Rule Violations Pie Chart
+        st.write("**Rule Violations Breakdown**")
+        rule_counts = filtered_anomalies['rule_violations'].value_counts()
+        fig, ax = plt.subplots(figsize=(8, 6))
+        ax.pie(rule_counts, labels=rule_counts.index, autopct='%1.1f%%', startangle=90)
+        ax.set_title('Rule Violations Distribution')
         st.pyplot(fig)
         plt.close()
 
@@ -206,7 +227,7 @@ def main():
             anomaly_details = filtered_anomalies.loc[selected_index, display_cols].copy()
             anomaly_details_display = pd.DataFrame([anomaly_details])
             for col in ['listed_price', 'predicted_price', 'residual']:
-                anomaly_details_display[col] = anomaly_details_display[col].apply(lambda x: f'₹{x:,.0f}' if pd.notnull(x) else '₹0')
+                anomaly_details_display[col] = anomaly_details_display[col].apply(lambda x: f'Rs. {x:,.0f}' if pd.notnull(x) else 'Rs. 0')
             for col in ['km', 'car_age']:
                 anomaly_details_display[col] = anomaly_details_display[col].apply(lambda x: f'{x:,.0f}' if pd.notnull(x) else '0')
             st.dataframe(anomaly_details_display)

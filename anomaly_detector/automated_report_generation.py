@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 import shap
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from sklearn.preprocessing import StandardScaler
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -23,7 +24,6 @@ REPORT_PATH = os.path.join(REPORTS_PATH, 'anomaly_report.pdf')
 os.makedirs(REPORTS_PATH, exist_ok=True)
 
 def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
-    # [Previous generate_report function unchanged]
     # Create PDF document
     doc = SimpleDocTemplate(REPORT_PATH, pagesize=letter, leftMargin=36, rightMargin=36)
     elements = []
@@ -50,7 +50,7 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     display_cols = ['model', 'oem', 'listed_price', 'predicted_price', 'residual', 'km', 'car_age', 'rule_violations']
     report_df = filtered_anomalies[display_cols].copy()
     for col in ['listed_price', 'predicted_price', 'residual']:
-        report_df[col] = report_df[col].apply(lambda x: f'₹{x:,.0f}' if pd.notnull(x) else '₹0')
+        report_df[col] = report_df[col].apply(lambda x: f'Rs. {x:,.0f}' if pd.notnull(x) else 'Rs. 0')
     for col in ['km', 'car_age']:
         report_df[col] = report_df[col].apply(lambda x: f'{x:,.0f}' if pd.notnull(x) else '0')
     
@@ -93,11 +93,11 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     ax.scatter(filtered_anomalies['listed_price'], filtered_anomalies['predicted_price'], c='red', alpha=0.5, label='Anomaly')
     ax.plot([filtered_anomalies['listed_price'].min(), filtered_anomalies['listed_price'].max()],
             [filtered_anomalies['listed_price'].min(), filtered_anomalies['listed_price'].max()], 'k--')
-    ax.set_xlabel('Actual Price (₹)')
-    ax.set_ylabel('Predicted Price (₹)')
+    ax.set_xlabel('Actual Price (Rs.)')
+    ax.set_ylabel('Predicted Price (Rs.)')
     ax.set_title('Predicted vs. Actual Prices')
-    ax.set_xscale('log')
-    ax.set_yscale('log')
+    ax.xaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
+    ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, _: f'Rs. {x:,.0f}'))
     ax.legend()
     plt.tight_layout()
     img_path = os.path.join(REPORTS_PATH, 'scatter_plot.png')
