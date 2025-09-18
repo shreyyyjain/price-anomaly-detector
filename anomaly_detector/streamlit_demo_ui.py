@@ -11,13 +11,14 @@ from io import BytesIO
 from automated_report_generation import generate_report  # Correct import
 
 # Project paths
-PROJECT_ROOT = r'C:\Users\shrey\Desktop\Projects\Explainable Price Anomaly Detector for Indian Second-hand Marketplace'
-DATA_PATH = os.path.join(PROJECT_ROOT, 'data', 'cleaned_engineered.csv')
-ANOMALIES_PATH = os.path.join(PROJECT_ROOT, 'reports', 'validated_anomalies.csv')
-MODEL_PATH = os.path.join(PROJECT_ROOT, 'models', 'baseline_model.pkl')
-SCALER_PATH = os.path.join(PROJECT_ROOT, 'models', 'scaler.pkl')
-FEATURE_PATH = os.path.join(PROJECT_ROOT, 'models', 'feature_names.pkl')
-REPORTS_PATH = os.path.join(PROJECT_ROOT, 'reports')
+DATA_PATH = 'data/cleaned_engineered.csv'
+ANOMALIES_PATH = 'reports/validated_anomalies.csv'
+MODEL_PATH = 'models/baseline_model.pkl'
+SCALER_PATH = 'models/scaler.pkl'
+FEATURE_PATH = 'models/feature_names.pkl'
+REPORTS_PATH = 'reports'
+
+os.makedirs(REPORTS_PATH, exist_ok=True)
 
 def main():
     st.set_page_config(page_title="Price Anomaly Detector", layout="wide")

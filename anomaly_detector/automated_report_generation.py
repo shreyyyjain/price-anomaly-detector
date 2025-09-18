@@ -11,30 +11,19 @@ from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, 
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import inch
 
-# Project paths
-PROJECT_ROOT = r'C:\Users\shrey\Desktop\Projects\Explainable Price Anomaly Detector for Indian Second-hand Marketplace'
-DATA_PATH = os.path.join(PROJECT_ROOT, 'data', 'cleaned_engineered.csv')
-ANOMALIES_PATH = os.path.join(PROJECT_ROOT, 'reports', 'validated_anomalies.csv')
-MODEL_PATH = os.path.join(PROJECT_ROOT, 'models', 'baseline_model.pkl')
-SCALER_PATH = os.path.join(PROJECT_ROOT, 'models', 'scaler.pkl')
-FEATURE_PATH = os.path.join(PROJECT_ROOT, 'models', 'feature_names.pkl')
-REPORTS_PATH = os.path.join(PROJECT_ROOT, 'reports')
+# Project paths (relative for deployment)
+DATA_PATH = 'data/cleaned_engineered.csv'
+ANOMALIES_PATH = 'reports/validated_anomalies.csv'
+MODEL_PATH = 'models/baseline_model.pkl'
+SCALER_PATH = 'models/scaler.pkl'
+FEATURE_PATH = 'models/feature_names.pkl'
+REPORTS_PATH = 'reports'
 REPORT_PATH = os.path.join(REPORTS_PATH, 'anomaly_report.pdf')
+
 os.makedirs(REPORTS_PATH, exist_ok=True)
 
 def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
-    """
-    Generate a PDF and CSV report summarizing anomalies with visualizations.
-    
-    Args:
-        filtered_anomalies (pd.DataFrame): DataFrame of anomalies to report.
-        X_anomalies (pd.DataFrame): Feature matrix for anomalies.
-        shap_values (np.ndarray): SHAP values for anomalies.
-        explainer (shap.TreeExplainer): SHAP explainer object.
-    
-    Returns:
-        tuple: Paths to the generated PDF and CSV files.
-    """
+    # [Previous generate_report function unchanged]
     # Create PDF document
     doc = SimpleDocTemplate(REPORT_PATH, pagesize=letter, leftMargin=36, rightMargin=36)
     elements = []
@@ -44,7 +33,7 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     title = Paragraph("Anomaly Detection Report", styles['Title'])
     elements.append(title)
     elements.append(Spacer(1, 12))
-    elements.append(PageBreak())  # New page after title
+    elements.append(PageBreak())
 
     # Summary with rule violation counts
     rule_counts = {}
@@ -55,7 +44,7 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     elements.append(Paragraph("Summary", styles['Heading2']))
     elements.append(Paragraph(summary, styles['Normal']))
     elements.append(Spacer(1, 12))
-    elements.append(PageBreak())  # New page after summary
+    elements.append(PageBreak())
 
     # Anomaly Table
     display_cols = ['model', 'oem', 'listed_price', 'predicted_price', 'residual', 'km', 'car_age', 'rule_violations']
@@ -65,7 +54,6 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     for col in ['km', 'car_age']:
         report_df[col] = report_df[col].apply(lambda x: f'{x:,.0f}' if pd.notnull(x) else '0')
     
-    # Wrap long text
     normal_style = styles['Normal']
     table_data = [display_cols]
     for _, row in report_df.iterrows():
@@ -78,7 +66,6 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
                 row_data.append(value)
         table_data.append(row_data)
     
-    # Set column widths
     col_widths = [100, 80, 70, 70, 70, 50, 50, 100]
     table = Table(table_data, colWidths=col_widths)
     table.setStyle(TableStyle([
@@ -99,7 +86,7 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     elements.append(Paragraph("Anomaly Details", styles['Heading2']))
     elements.append(table)
     elements.append(Spacer(1, 12))
-    elements.append(PageBreak())  # New page after table
+    elements.append(PageBreak())
 
     # Scatter Plot
     fig, ax = plt.subplots(figsize=(6, 4))
@@ -117,9 +104,9 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     fig.savefig(img_path, dpi=300, bbox_inches='tight')
     plt.close()
     elements.append(Paragraph("Predicted vs. Actual Prices", styles['Heading2']))
-    elements.append(Image(img_path, width=350, height=250))  # Reduced size
+    elements.append(Image(img_path, width=350, height=250))
     elements.append(Spacer(1, 12))
-    elements.append(PageBreak())  # New page after scatter plot
+    elements.append(PageBreak())
 
     # SHAP Summary Plot
     fig, ax = plt.subplots(figsize=(6, 4))
@@ -129,7 +116,7 @@ def generate_report(filtered_anomalies, X_anomalies, shap_values, explainer):
     fig.savefig(img_path, dpi=300, bbox_inches='tight')
     plt.close()
     elements.append(Paragraph("SHAP Summary Plot", styles['Heading2']))
-    elements.append(Image(img_path, width=350, height=250))  # Reduced size
+    elements.append(Image(img_path, width=350, height=250))
     elements.append(Spacer(1, 12))
 
     # Build PDF
@@ -206,7 +193,6 @@ if __name__ == "__main__":
             print("Warning: 'original_index' column not found in validated_anomalies.csv. Using DataFrame index.")
             anomaly_indices = anomaly_df.index.tolist()
         
-        # Ensure indices are valid
         valid_indices = [idx for idx in anomaly_indices if idx in X.index]
         if len(valid_indices) < len(anomaly_indices):
             print(f"Warning: {len(anomaly_indices) - len(valid_indices)} invalid indices found. Using {len(valid_indices)} valid indices.")
